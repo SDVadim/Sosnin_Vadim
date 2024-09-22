@@ -1,0 +1,9 @@
+on: [push, pull_request]
+name: get_time
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: time
+        run: date +"%Y-%m-%d %T" 
+        
