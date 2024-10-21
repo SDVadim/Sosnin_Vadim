@@ -15,9 +15,12 @@ class BubbleSortTest {
     assertEquals(sorted, answer);
   }
   @Test
-  public void TestCheckSize() {
+  public void TestCheckMaxSizeExeption() {
     BubbleSort bubleSort = new BubbleSort(5);
-    List<Integer> list = Arrays.asList(10,0 , 1, 2, 3, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0);
-    assertThrows(IllegalArgumentException.class, () -> bubleSort.sort(list));
+    List<Integer> list = Arrays.asList(10,0 , 1, 2, 3, 9, 8, 7, 6, 5, 4);
+
+    MaxSizeException maxSizeException = assertThrows(MaxSizeException.class, () -> bubleSort.sort(list));
+    assertEquals("Этот алгоритм сортировки: " +
+            "Bubble не может обработать такое количество элементов: 11", maxSizeException.getMessage());
   }
 }

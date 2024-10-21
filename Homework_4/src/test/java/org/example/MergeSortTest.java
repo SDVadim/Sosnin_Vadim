@@ -2,7 +2,6 @@ package org.example;
 
 import org.junit.jupiter.api.Test;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -18,8 +17,12 @@ class MergeSortTest {
   }
 
   @Test
-  public void TestCheckSize() {
+  public void TestCheckMaxSizeExeption() {
     MergeSort mergeSort = new MergeSort(5);
-    assertThrows(IllegalArgumentException.class, () -> mergeSort.sort(Arrays.asList(9,8,7,6,5,4,3,2,1)));
+    List<Integer> list = Arrays.asList(10,0 , 1, 2, 3, 9, 8, 7, 6, 5, 4);
+
+    MaxSizeException maxSizeException = assertThrows(MaxSizeException.class, () -> mergeSort.sort(list));
+    assertEquals("Этот алгоритм сортировки: " +
+            "Merge не может обработать такое количество элементов: 11", maxSizeException.getMessage());
   }
 }

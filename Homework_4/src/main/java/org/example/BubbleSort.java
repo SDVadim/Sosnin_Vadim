@@ -2,17 +2,20 @@ package org.example;
 
 import java.util.List;
 
-public class BubbleSort {
-  private int max_size;
+public class BubbleSort implements Action{
+  private final int max_size;
 
   public BubbleSort(int max_size) {
     this.max_size = max_size;
   }
 
-  public List<Integer> sort(List<Integer> list ) throws IllegalArgumentException{
+  public TypeSort type() {
+    return TypeSort.Bubble;
+  }
+
+  public List<Integer> sort(List<Integer> list) throws MaxSizeException {
     if (this.max_size < list.size()) {
-      throw new IllegalArgumentException("Этот алгоритм сортировки не может обработать такое" +
-              " количество элементов");
+      throw new MaxSizeException(list.size(), this.type());
     }
     for (int i = 0; i < list.size(); i++) {
       for (int j = i + 1; j < list.size(); j++) {

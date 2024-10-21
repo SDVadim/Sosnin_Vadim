@@ -1,6 +1,7 @@
 package org.example;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
@@ -16,25 +17,19 @@ public class Main {
       array.add(input.nextInt());
     }
 
-    System.out.println("Введите тип сортиировки (1 - сортировка " +
-            "пузырьком; 2 - сортировка слиянием): ");
-    boolean flag;
-    do {
-      int type_sort = input.nextInt();
-      flag = false;
-      if (type_sort == 1) {
-        BubbleSort bubbleSort = new BubbleSort(10);
-        List<Integer> sorted_list = bubbleSort.sort(array);
-        System.out.println(sorted_list);
-      } else if (type_sort == 2) {
-        MergeSort mergeSort = new MergeSort(50);
-        List<Integer> sorted_list = mergeSort.sort(array);
-        System.out.println(sorted_list);
+    System.out.println("Доступны следующие сортировки:");
+    for (TypeSort typeSort: TypeSort.values()) {
+      System.out.print(typeSort + " ");
+    }
 
-      } else {
-        System.out.println("Неверно введено значение");
-        flag = true;
-      }
-    } while (flag);
+    System.out.println("\nВведите тип сортировки:");
+    TypeSort typeSort = TypeSort.valueOf(input.next());
+
+    SortManager sortManager = new SortManager(Arrays.asList(new BubbleSort(10), new MergeSort(50)));
+    List<Integer> sorted = sortManager.sort(array, typeSort);
+
+    for (int i: sorted) {
+      System.out.print(i + " ");
+    }
   }
 }
