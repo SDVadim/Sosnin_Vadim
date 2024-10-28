@@ -2,9 +2,9 @@ name: build
 
 on:
   push:
-    branches: [ "main" ]
+    branches: [ "feature/Home_work_4" ]
   pull_request:
-    branches: [ "main" ]
+    branches: [ "feature/Home_work_4" ]
 
 jobs:
   build:
