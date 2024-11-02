@@ -11,9 +11,7 @@ public class Message {
     this.enrichmentType = type;
   }
 
-  public enum EnrichmentType {
-    MSISDN;
-  }
+
 
   public String get(String key) {
     return this.content.get(key);

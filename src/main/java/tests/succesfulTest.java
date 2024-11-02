@@ -19,10 +19,10 @@ public class succesfulTest {
      input.put("action", "button_click");
      input.put("page", "book_card");
      input.put("msisdn", "+79125912363");
-     Message message = new Message(input, Message.EnrichmentType.MSISDN);
+     Message message = new Message(input, EnrichmentType.MSISDN);
 
      EnrichmentService service = new EnrichmentService();
-     service.addEnrichment(Message.EnrichmentType.MSISDN, new EnrichByMsisdn(users));
+     service.addEnrichment(EnrichmentType.MSISDN, new EnrichByMsisdn(users));
      message = service.enrich(message);
 
      Message correctMessage = new Message(Map.of(
@@ -31,7 +31,7 @@ public class succesfulTest {
              "page", "book_card",
              "msisdn", "+79125912363",
              "secondName", "Sosnin"
-     ), Message.EnrichmentType.MSISDN);
+     ), EnrichmentType.MSISDN);
 
      assertEquals(message.getContent(), correctMessage.getContent());
      assertEquals(message.getType(), correctMessage.getType());
@@ -45,17 +45,17 @@ public class succesfulTest {
 
       Map<String, String> input= new HashMap<>();
       input.put("msisdn", "+79125912363");
-      Message message = new Message(input, Message.EnrichmentType.MSISDN);
+      Message message = new Message(input, EnrichmentType.MSISDN);
 
       EnrichmentService service = new EnrichmentService();
-      service.addEnrichment(Message.EnrichmentType.MSISDN, new EnrichByMsisdn(users));
+      service.addEnrichment(EnrichmentType.MSISDN, new EnrichByMsisdn(users));
       message = service.enrich(message);
 
       Message correctMessage = new Message(Map.of(
               "firstName", "Vadim",
               "msisdn", "+79125912363",
               "secondName", "Sosnin"
-      ), Message.EnrichmentType.MSISDN);
+      ), EnrichmentType.MSISDN);
 
       assertEquals(message.getContent(), correctMessage.getContent());
       assertEquals(message.getType(), correctMessage.getType());

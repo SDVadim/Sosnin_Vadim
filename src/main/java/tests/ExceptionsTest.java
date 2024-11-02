@@ -1,6 +1,6 @@
 import example.*;
-import org.junit.jupiter.api.Test;
 
+import org.junit.jupiter.api.*;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -32,7 +32,7 @@ public class ExceptionsTest {
     input.put("action", "button_click");
     input.put("page", "book_card");
     input.put("msisdn", "+79125912363");
-    Message message = new Message(input, Message.EnrichmentType.MSISDN);
+    Message message = new Message(input, EnrichmentType.MSISDN);
     EnrichmentService service = new EnrichmentService();
     Exception exception = assertThrows(IllegalArgumentException.class, () -> service.addEnrichment(null, new EnrichByMsisdn(users)));
     assertEquals("type can not be null", exception.getMessage());
@@ -48,9 +48,9 @@ public class ExceptionsTest {
     input.put("action", "button_click");
     input.put("page", "book_card");
     input.put("msisdn", "+79125912363");
-    Message message = new Message(input, Message.EnrichmentType.MSISDN);
+    Message message = new Message(input, EnrichmentType.MSISDN);
     EnrichmentService service = new EnrichmentService();
-    Exception exception = assertThrows(IllegalArgumentException.class, () -> service.addEnrichment(Message.EnrichmentType.MSISDN, null));
+    Exception exception = assertThrows(IllegalArgumentException.class, () -> service.addEnrichment(EnrichmentType.MSISDN, null));
     assertEquals("enrichment can not be null", exception.getMessage());
   }
 }

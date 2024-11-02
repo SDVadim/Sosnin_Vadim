@@ -13,7 +13,7 @@ public class Main {
     input.put("action", "button_click");
     input.put("page", "book_card");
     input.put("msisdn", "+79125912363");
-    Message message = new Message(input, Message.EnrichmentType.MSISDN);
+    Message message = new Message(input, EnrichmentType.MSISDN);
 
     EnrichmentService service = new EnrichmentService();
     service.addEnrichment(null, new EnrichByMsisdn(users));
