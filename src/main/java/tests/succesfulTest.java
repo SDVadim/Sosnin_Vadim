@@ -1,7 +1,6 @@
-package src.main.java.tests;
+import example.*;
 
 import org.junit.jupiter.api.Test;
-import src.main.java.org.example.*;
 
 import java.util.HashMap;
 import java.util.Map;

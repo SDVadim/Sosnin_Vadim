@@ -1,4 +1,4 @@
-package src.main.java.org.example;
+package example;
 
 public class User {
   private String firstName;

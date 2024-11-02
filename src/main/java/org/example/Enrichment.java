@@ -1,4 +1,5 @@
-package src.main.java.org.example;
+package example;
+
 
 public interface Enrichment {
   Message enrich(Message message);

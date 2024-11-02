@@ -1,4 +1,4 @@
-package src.main.java.org.example;
+package example;
 
 public class EnrichByMsisdn implements Enrichment {
   private UserData users;
