@@ -16,11 +16,11 @@ public class Main {
     Message message = new Message(input, Message.EnrichmentType.MSISDN);
 
     EnrichmentService service = new EnrichmentService();
-    service.addEnrichment(Message.EnrichmentType.MSISDN, new EnrichByMsisdn(users));
+    service.addEnrichment(null, new EnrichByMsisdn(users));
     message = service.enrich(message);
-    Message newMessage = new Message(message.getContent(), Message.EnrichmentType.MSISDN);
 
-    newMessage.toString();
-
+    for (String e : message.getContent().keySet()) {
+      System.out.println(e + ": " + message.getContent().get(e));
+    }
   }
 }

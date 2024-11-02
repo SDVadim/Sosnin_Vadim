@@ -19,6 +19,4 @@ public class EnrichByMsisdn implements Enrichment {
     }
     return message;
   }
-
-
 }
