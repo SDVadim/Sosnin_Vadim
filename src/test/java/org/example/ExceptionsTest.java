@@ -1,6 +1,8 @@
+package org.example;
+
 import example.*;
 
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.Test;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -11,7 +13,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 public class ExceptionsTest {
 
   @Test
-  void CheckNullNameTest() {
+  public void CheckNullNameTest() {
     String name = null;
     String secondName = "Sosnin";
     Exception exception = assertThrows(IllegalArgumentException.class, () -> new User(name, secondName));
@@ -23,7 +25,7 @@ public class ExceptionsTest {
   }
 
   @Test
-  void CheckNullEnrichmentType() {
+  public void CheckNullEnrichmentType() {
     User user1 = new User("Vadim", "Sosnin");
     UserData users = new UserData();
     users.updateUserByMsisdn("+79125912363", user1);
@@ -39,7 +41,7 @@ public class ExceptionsTest {
   }
 
   @Test
-  void CheckNullEnrichment() {
+  public void CheckNullEnrichment() {
     User user1 = new User("Vadim", "Sosnin");
     UserData users = new UserData();
     users.updateUserByMsisdn("+79125912363", user1);
