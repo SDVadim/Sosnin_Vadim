@@ -1,10 +1,10 @@
-name: build
+name: Java CI with Maven
 
 on:
   push:
-    branches: [ "feature/Home_work_4" ]
+    branches: [ "main", "feature/home_work_4" ]
   pull_request:
-    branches: [ "feature/Home_work_4" ]
+    branches: [ "main" ]
 
 jobs:
   build:
@@ -17,7 +17,7 @@ jobs:
         uses: actions/setup-java@v3
         with:
           java-version: '17'
-          distribution: 'murine'
+          distribution: 'temurin'
           cache: maven
       - name: Build with Maven
         run: mvn verify
