@@ -1,3 +1,5 @@
+package org.example;
+
 import spark.Request;
 import spark.Response;
 import spark.Spark;

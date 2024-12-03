@@ -1,3 +1,5 @@
+package org.example.Article;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -15,6 +17,14 @@ public class Article {
     this.comments = comments;
   }
 
+  public Article withName(String newTitle) {
+    return new Article(id, newTitle, tags, comments);
+  }
+
+  public Article withTags(Set<String> newTags) {
+    return new Article(id, title, newTags, comments);
+  }
+
   public long getId() {
     return id.getId();
   }
@@ -29,5 +39,16 @@ public class Article {
 
   public List<String> getComments() {
     return new ArrayList<>(comments);
+  }
+
+  public boolean equals(Object o) {
+    if (this == o) {
+      return true;
+    }
+    if (o == null || getClass() != o.getClass()) {
+      return false;
+    }
+    Article article = (Article) o;
+    return this.id == article.id;
   }
 }
