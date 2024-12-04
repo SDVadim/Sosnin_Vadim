@@ -1,8 +1,8 @@
 package org.example.service;
 
-import org.example.Article.Article;
-import org.example.Article.ArticleId;
-import org.example.Repository.ArticleRepository;
+import org.example.article.Article;
+import org.example.article.ArticleId;
+import org.example.repository.ArticleRepository;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,12 +27,12 @@ public class ArticleService {
     }
   }
 
-  public Article create(String title, Set<String> tags) throws Exception {
+  public ArticleId create(String title, Set<String> tags) throws Exception {
     try {
       ArticleId id = articleRepository.generateId();
       Article newArticle = new Article(id, title, tags, new ArrayList<>());
       articleRepository.create(newArticle);
-      return newArticle;
+      return id;
     } catch (Exception e) {
       throw new Exception(); //******************************************
     }

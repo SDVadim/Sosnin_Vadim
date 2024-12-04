@@ -1,7 +1,7 @@
-package org.example.Repository;
+package org.example.repository;
 
-import org.example.Article.Article;
-import org.example.Article.ArticleId;
+import org.example.article.Article;
+import org.example.article.ArticleId;
 
 import java.util.List;
 
@@ -13,9 +13,9 @@ public interface ArticleRepository {
 
   Article findById(ArticleId id) throws Exception;
 
-  Article create(Article article) throws Exception;
+  void create(Article article) throws Exception;
 
-  Article update(Article article) throws Exception;
+  void update(Article article) throws Exception;
 
   void delete(ArticleId id) throws Exception;
 }

@@ -1,4 +1,4 @@
-package org.example.Article;
+package org.example.article;
 
 public class ArticleId {
   private final long id;

@@ -1,7 +1,7 @@
-package org.example.Repository;
+package org.example.repository;
 
-import org.example.Article.Article;
-import org.example.Article.ArticleId;
+import org.example.article.Article;
+import org.example.article.ArticleId;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,22 +34,20 @@ public class InMemoryArticleRepository implements ArticleRepository {
   }
 
   @Override
-  public Article create(Article article) throws Exception {
+  public void create(Article article) throws Exception {
     if (repo.get(article.getId()) != null) {
       throw new Exception(""); //******************************
     } else {
       repo.put(article.getId(), article);
-      return article;
     }
   }
 
   @Override
-  public Article update(Article article) throws Exception {
+  public void update(Article article) throws Exception {
     if (repo.get(article.getId()) != null) {
       throw new Exception(); //******************************
     } else {
       repo.put(article.getId(), article);
-      return article;
     }
   }
 
