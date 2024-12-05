@@ -44,7 +44,7 @@ public class InMemoryArticleRepository implements ArticleRepository {
 
   @Override
   public void update(Article article) throws Exception {
-    if (repo.get(article.getId()) != null) {
+    if (repo.get(article.getId()) == null) {
       throw new Exception(); //******************************
     } else {
       repo.put(article.getId(), article);

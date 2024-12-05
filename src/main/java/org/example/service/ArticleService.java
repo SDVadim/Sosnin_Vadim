@@ -2,7 +2,9 @@ package org.example.service;
 
 import org.example.article.Article;
 import org.example.article.ArticleId;
+import org.example.comment.Comment;
 import org.example.repository.ArticleRepository;
+import org.example.repository.CommentRepository;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,9 +12,11 @@ import java.util.Set;
 
 public class ArticleService {
   private final ArticleRepository articleRepository;
+  private final CommentRepository commentRepository;
 
-  public ArticleService(ArticleRepository articleRepository) {
+  public ArticleService(ArticleRepository articleRepository, CommentRepository commentRepository) {
     this.articleRepository = articleRepository;
+    this.commentRepository = commentRepository;
   }
 
   public List<Article> findAll() {
@@ -52,7 +56,9 @@ public class ArticleService {
   public void delete(ArticleId id) throws Exception {
     try {
       Article article = articleRepository.findById(id);
-      /// Удаляю комментарии
+      for (Comment comment : article.getComments()) {
+        commentRepository.delete(comment.getId());
+      }
       articleRepository.delete(id);
     } catch (Exception e) {
       throw new Exception(); //*****************************

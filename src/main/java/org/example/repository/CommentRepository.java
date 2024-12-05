@@ -15,7 +15,7 @@ public interface CommentRepository {
 
   void create(Comment comment) throws Exception;
 
-  void update(Comment coment);
+  void update(Comment coment) throws Exception;
 
-  void delete(CommentId commentId);
+  void delete(CommentId commentId) throws Exception;
 }

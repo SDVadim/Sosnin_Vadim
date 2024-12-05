@@ -44,12 +44,21 @@ public class InMemoryCommentRepository implements CommentRepository {
   }
 
   @Override
-  public void update(Comment coment) {
-
+  public void update(Comment coment) throws Exception {
+    CommentId id = coment.getId();
+    if (repo.get(id) == null) {
+      throw new Exception();
+    } else {
+      repo.put(id, coment);
+    }
   }
 
   @Override
-  public void delete(CommentId commentId) {
-
+  public void delete(CommentId commentId) throws Exception {
+    if (repo.get(commentId) == null) {
+      throw new Exception();
+    } else {
+      repo.remove(commentId);
+    }
   }
 }

@@ -1,9 +1,11 @@
 package org.example.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.example.article.Article;
 import org.example.article.ArticleId;
 import org.example.request.ArticleCreateRequest;
-import org.example.response.ErrorResponse;
+import org.example.request.ArticleUpdateRequest;
+import org.example.response.*;
 import org.example.service.ArticleService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -33,34 +35,80 @@ public class ArticleController implements Controller {
   }
 
   private void find() {
-
+    service.get("/api/articles/:articleId",
+        (Request request, Response response) -> {
+          response.type("application/json");
+          String body = request.body();
+          ArticleId articleId = new ArticleId(Long.parseLong(request.params("articleId")));
+          try {
+            Article article = articleService.findById(articleId);
+            response.status(201);
+            return objectMapper.writeValueAsString(new ArticleFindResponse(article.getTitle(), article.getTags(), article.getComments()));
+          } catch (Exception e) {
+            response.status(404);
+            LOG.warn("Cannot find Article with articleId: {}", articleId);
+            return objectMapper.writeValueAsString(new ErrorResponse(e.getMessage()));
+          }
+        }
+      );
   }
 
   private void create() {
     service.post("/api/articles",
-            (Request request, Response response) -> {
-              response.type("application/json");
-              String body = request.body();
-              ArticleCreateRequest articleRequest = objectMapper.readValue(body, ArticleCreateRequest.class);
-              try {
-                ArticleId id = articleService.create(articleRequest.title(), articleRequest.tags());
-                response.status(201);
-                return objectMapper.writeValueAsString(new ArticleResponse(id));
-              } catch (Exception e) {
-                LOG.warn("Cannot create article", e);
-                response.status(400);
-                return objectMapper.writeValueAsString(new ErrorResponse(e.getMessage()));
-              }
-            }
-
+        (Request request, Response response) -> {
+          response.type("application/json");
+          String body = request.body();
+          ArticleCreateRequest articleRequest = objectMapper.readValue(body, ArticleCreateRequest.class);
+          try {
+            ArticleId id = articleService.create(articleRequest.title(), articleRequest.tags());
+            response.status(201);
+            return objectMapper.writeValueAsString(new ArticleCreateResponse(id));
+          } catch (Exception e) {
+            LOG.warn("Cannot create article", e);
+            response.status(400);
+            return objectMapper.writeValueAsString(new ErrorResponse(e.getMessage()));
+          }
+        }
     );
   }
 
   private void update() {
-
+    service.post("/api/articles/:articleId",
+        (Request request, Response response) -> {
+          response.type("application/json");
+          String body = request.body();
+          ArticleId articleId = new ArticleId(Long.parseLong(request.params("articleId")));
+          ArticleUpdateRequest articleUpdateRequest = objectMapper.readValue(body, ArticleUpdateRequest.class);
+          try {
+            Article article = articleService.findById(articleId);
+            articleService.update(articleId, articleUpdateRequest.title(), articleUpdateRequest.tags());
+            response.status(201);
+            return objectMapper.writeValueAsString(new ArticleUpdateResponse(articleId));
+          } catch (Exception e) {
+            LOG.warn("Cannot find Article with articleId: {} to update", articleId);
+            response.status(400);
+            return objectMapper.writeValueAsString(new ErrorResponse(e.getMessage()));
+          }
+        }
+    );
   }
 
   private void delete() {
-
+    service.delete(
+        "/api/articles/:articleId",
+        (Request request, Response response) -> {
+          response.type("application/json");
+          ArticleId articleId = new ArticleId(Long.parseLong(request.params("articleId")));
+          try {
+            articleService.delete(articleId);
+            response.status(201);
+            return objectMapper.writeValueAsString(new ArticleDeleteResponse(articleId));
+          } catch (Exception e) {
+            LOG.warn("Cannot find Article with articleId: {} to delete", articleId);
+            response.status(400);
+            return objectMapper.writeValueAsString(new ArticleDeleteResponse(articleId));
+          }
+        }
+    );
   }
 }

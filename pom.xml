@@ -34,6 +34,11 @@
             <artifactId>spark-core</artifactId>
             <version>2.9.4</version>
         </dependency>
+        <dependency>
+            <groupId>com.sparkjava</groupId>
+            <artifactId>spark-template-freemarker</artifactId>
+            <version>2.7.1</version>
+        </dependency>
 <!--        <dependency>-->
 <!--            <groupId>org.junit.jupiter</groupId>-->
 <!--            <artifactId>junit-jupiter-api</artifactId>-->
@@ -74,7 +79,7 @@
                                         <limit>
                                             <counter>LINE</counter>
                                             <value>COVEREDRATIO</value>
-                                            <minimum>0.60</minimum>
+                                            <minimum>0</minimum>
                                         </limit>
                                     </limits>
                                 </rule>

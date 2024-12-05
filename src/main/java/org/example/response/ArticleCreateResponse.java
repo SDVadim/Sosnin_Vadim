@@ -1,4 +1,5 @@
 package org.example.response;
 
-public class ArticleCreateResponse {
-}
+import org.example.article.ArticleId;
+
+public record ArticleCreateResponse(ArticleId id) {}
