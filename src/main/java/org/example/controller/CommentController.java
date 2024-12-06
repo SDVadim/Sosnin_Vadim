@@ -2,6 +2,8 @@ package org.example.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.example.comment.CommentId;
+import org.example.exeption.DuplicateCommentExeption;
+import org.example.exeption.NoExistCommentExeption;
 import org.example.request.CommentCreateRequest;
 import org.example.response.CommentCreateResponse;
 import org.example.response.CommentDeleteResponse;
@@ -43,7 +45,7 @@ public class CommentController implements Controller{
             CommentId commentId = commentService.create(commentCreateRequest.text(), commentCreateRequest.articleId());
             response.status(201);
             return objectMapper.writeValueAsString(new CommentCreateResponse(commentId));
-          } catch (Exception e) {
+          } catch (DuplicateCommentExeption e) {
             LOG.warn("Cannot create comment", e);
             response.status(400);
             return objectMapper.writeValueAsString(new ErrorResponse(e.getMessage()));
@@ -62,8 +64,8 @@ public class CommentController implements Controller{
             commentService.delete(commentId);
             response.status(201);
             return objectMapper.writeValueAsString(new CommentDeleteResponse(commentId));
-          } catch (Exception e) {
-            LOG.warn("Cannot find comment with commentId: {} to delete", commentId);
+          } catch (NoExistCommentExeption e) {
+            LOG.warn("Cannot find comment with commentId: {} to delete", commentId, e);
             response.status(400);
             return objectMapper.writeValueAsString(new ErrorResponse(e.getMessage()));
           }

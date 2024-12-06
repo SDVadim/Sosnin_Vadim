@@ -3,6 +3,9 @@ package org.example.service;
 import org.example.article.ArticleId;
 import org.example.comment.Comment;
 import org.example.comment.CommentId;
+import org.example.exeption.DuplicateCommentExeption;
+import org.example.exeption.NoExistArticleExeption;
+import org.example.exeption.NoExistCommentExeption;
 import org.example.repository.ArticleRepository;
 import org.example.repository.CommentRepository;
 
@@ -18,7 +21,7 @@ public class CommentService {
   }
 
 
-  public CommentId create(String text, ArticleId articleId) throws Exception {
+  public CommentId create(String text, ArticleId articleId) throws DuplicateCommentExeption, NoExistArticleExeption {
     try {
       CommentId commentId = commentRepository.generateId();
       Comment newComment = new Comment(commentId, articleId, text);
@@ -27,16 +30,16 @@ public class CommentService {
       comments.add(newComment);
       articleRepository.update(articleRepository.findById(articleId).withComment(comments));
       return commentId;
-    } catch (Exception e) {
-      throw new Exception("");
+    } catch (DuplicateCommentExeption | NoExistArticleExeption e) {
+      throw e;
     }
   }
 
-  public void delete(CommentId id) throws Exception {
+  public void delete(CommentId id) throws NoExistCommentExeption {
     try {
       commentRepository.delete(id);
-    } catch (Exception e) {
-      throw new Exception();
+    } catch (NoExistCommentExeption e) {
+      throw e;
     }
   }
 }

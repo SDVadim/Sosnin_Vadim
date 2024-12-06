@@ -2,6 +2,9 @@ package org.example.repository;
 
 import org.example.comment.Comment;
 import org.example.comment.CommentId;
+import org.example.exeption.DuplicateCommentExeption;
+import org.example.exeption.NoExistArticleExeption;
+import org.example.exeption.NoExistCommentExeption;
 
 import java.util.List;
 
@@ -11,11 +14,11 @@ public interface CommentRepository {
 
   List<Comment> findAll();
 
-  Comment findById(CommentId id) throws Exception;
+  Comment findById(CommentId id) throws NoExistCommentExeption;
 
-  void create(Comment comment) throws Exception;
+  void create(Comment comment) throws DuplicateCommentExeption;
 
-  void update(Comment coment) throws Exception;
+  void update(Comment coment) throws NoExistCommentExeption;
 
-  void delete(CommentId commentId) throws Exception;
+  void delete(CommentId commentId) throws NoExistCommentExeption;
 }

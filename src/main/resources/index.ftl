@@ -16,7 +16,7 @@
   </tr>
     <#list articles as article>
       <tr>
-        <td>${article.name}</td>
+        <td>${article.title}</td>
         <td>${article.count}</td>
       </tr>
     </#list>

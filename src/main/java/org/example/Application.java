@@ -4,10 +4,10 @@ import org.example.controller.Controller;
 
 import java.util.List;
 
-public class Appliccation {
+public class Application {
   private final List<Controller> controllers;
 
-  public Appliccation(List<Controller> controllers) {
+  public Application(List<Controller> controllers) {
     this.controllers = controllers;
   }
 

@@ -3,6 +3,8 @@ package org.example.controller;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.example.article.Article;
 import org.example.article.ArticleId;
+import org.example.exeption.DuplicateArticleExeption;
+import org.example.exeption.NoExistArticleExeption;
 import org.example.request.ArticleCreateRequest;
 import org.example.request.ArticleUpdateRequest;
 import org.example.response.*;
@@ -44,7 +46,7 @@ public class ArticleController implements Controller {
             Article article = articleService.findById(articleId);
             response.status(201);
             return objectMapper.writeValueAsString(new ArticleFindResponse(article.getTitle(), article.getTags(), article.getComments()));
-          } catch (Exception e) {
+          } catch (NoExistArticleExeption e) {
             response.status(404);
             LOG.warn("Cannot find Article with articleId: {}", articleId);
             return objectMapper.writeValueAsString(new ErrorResponse(e.getMessage()));
@@ -63,7 +65,7 @@ public class ArticleController implements Controller {
             ArticleId id = articleService.create(articleRequest.title(), articleRequest.tags());
             response.status(201);
             return objectMapper.writeValueAsString(new ArticleCreateResponse(id));
-          } catch (Exception e) {
+          } catch (DuplicateArticleExeption e) {
             LOG.warn("Cannot create article", e);
             response.status(400);
             return objectMapper.writeValueAsString(new ErrorResponse(e.getMessage()));
@@ -84,7 +86,7 @@ public class ArticleController implements Controller {
             articleService.update(articleId, articleUpdateRequest.title(), articleUpdateRequest.tags());
             response.status(201);
             return objectMapper.writeValueAsString(new ArticleUpdateResponse(articleId));
-          } catch (Exception e) {
+          } catch (NoExistArticleExeption e) {
             LOG.warn("Cannot find Article with articleId: {} to update", articleId);
             response.status(400);
             return objectMapper.writeValueAsString(new ErrorResponse(e.getMessage()));
@@ -103,7 +105,7 @@ public class ArticleController implements Controller {
             articleService.delete(articleId);
             response.status(201);
             return objectMapper.writeValueAsString(new ArticleDeleteResponse(articleId));
-          } catch (Exception e) {
+          } catch (NoExistArticleExeption e) {
             LOG.warn("Cannot find Article with articleId: {} to delete", articleId);
             response.status(400);
             return objectMapper.writeValueAsString(new ArticleDeleteResponse(articleId));

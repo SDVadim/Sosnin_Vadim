@@ -30,7 +30,7 @@ public class Main {
     Controller commentController = new CommentController(service, commentService, objectMapper);
     Controller articleFreemarkerController = new ArticleFreemarkerController(service, articleService, TemplateFactory.freeMarkerEngine());
 
-    Appliccation appliccation = new Appliccation(List.of(articleController, commentController, articleFreemarkerController));
+    Application appliccation = new Application(List.of(articleController, commentController, articleFreemarkerController));
     appliccation.start();
   }
 }

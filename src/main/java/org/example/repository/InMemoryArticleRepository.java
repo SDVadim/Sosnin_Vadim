@@ -2,6 +2,9 @@ package org.example.repository;
 
 import org.example.article.Article;
 import org.example.article.ArticleId;
+import org.example.exeption.DuplicateArticleExeption;
+import org.example.exeption.NoExistArticleExeption;
+import org.example.exeption.NoExistCommentExeption;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,37 +27,37 @@ public class InMemoryArticleRepository implements ArticleRepository {
   }
 
   @Override
-  public Article findById(ArticleId id) throws Exception {
+  public Article findById(ArticleId id) throws NoExistArticleExeption {
     Article article = repo.get(id);
     if (article == null) {
-      throw new Exception(""); //****************************
+      throw new NoExistArticleExeption("Cannot find article with id: " + id);
     } else {
       return article;
     }
   }
 
   @Override
-  public void create(Article article) throws Exception {
+  public void create(Article article) throws DuplicateArticleExeption {
     if (repo.get(article.getId()) != null) {
-      throw new Exception(""); //******************************
+      throw new DuplicateArticleExeption("Comment with id: " + article.getId() + "already exist");
     } else {
       repo.put(article.getId(), article);
     }
   }
 
   @Override
-  public void update(Article article) throws Exception {
+  public void update(Article article) throws NoExistArticleExeption {
     if (repo.get(article.getId()) == null) {
-      throw new Exception(); //******************************
+      throw new NoExistArticleExeption("Cannot find article with id: " + article.getId());
     } else {
       repo.put(article.getId(), article);
     }
   }
 
   @Override
-  public void delete(ArticleId id) throws Exception {
+  public void delete(ArticleId id) throws NoExistArticleExeption {
     if (repo.get(id.getId()) == null) {
-      throw new Exception(); //***************************
+      throw new NoExistArticleExeption("Cannot find article with id: " + id);
     } else {
       repo.remove(id.getId());
     }

@@ -2,6 +2,8 @@ package org.example.repository;
 
 import org.example.comment.Comment;
 import org.example.comment.CommentId;
+import org.example.exeption.DuplicateCommentExeption;
+import org.example.exeption.NoExistCommentExeption;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,39 +26,39 @@ public class InMemoryCommentRepository implements CommentRepository {
   }
 
   @Override
-  public Comment findById(CommentId id) throws Exception {
+  public Comment findById(CommentId id) throws NoExistCommentExeption {
     Comment comment = repo.get(id);
     if (comment == null) {
-      throw new Exception("");
+      throw new NoExistCommentExeption("Cannot find comment with id: " + id);
     } else {
       return comment;
     }
   }
 
   @Override
-  public void create(Comment comment) throws Exception {
+  public void create(Comment comment) throws DuplicateCommentExeption {
     CommentId id = comment.getId();
     if (repo.get(id) == null) {
       repo.put(id, comment);
     } else {
-      throw new Exception("");
+      throw new DuplicateCommentExeption("Comment with id: " + id + "already exist");
     }
   }
 
   @Override
-  public void update(Comment coment) throws Exception {
+  public void update(Comment coment) throws NoExistCommentExeption {
     CommentId id = coment.getId();
     if (repo.get(id) == null) {
-      throw new Exception();
+      throw new NoExistCommentExeption("Cannot find comment with id: " + id);
     } else {
       repo.put(id, coment);
     }
   }
 
   @Override
-  public void delete(CommentId commentId) throws Exception {
+  public void delete(CommentId commentId) throws NoExistCommentExeption {
     if (repo.get(commentId) == null) {
-      throw new Exception();
+      throw new NoExistCommentExeption("Cannot find comment with id: " + commentId);
     } else {
       repo.remove(commentId);
     }

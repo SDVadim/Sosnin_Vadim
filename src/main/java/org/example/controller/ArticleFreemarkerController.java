@@ -43,7 +43,7 @@ public class ArticleFreemarkerController implements Controller {
           response.type("text/html; charset=utf-8");
           List<Article> articles = articleService.findAll();
           List<Map<String, String>> articleMapList = articles.stream().map(
-              article -> Map.of("title", article.getTitle(), "count", String.valueOf(article.getComments().size()))).toList();
+              article -> Map.of("title", article.getTitle(), "count", "" + article.getComments().size())).toList();
           Map<String, Object> model = new HashMap<>();
           model.put("articles", articleMapList);
           return freeMarkerEngine.render(new ModelAndView(model, "index.ftl"));
