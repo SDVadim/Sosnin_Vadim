@@ -29,9 +29,12 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class EndToEndTest {
   private Service service;
 
+  public EndToEndTest() throws IOException, InterruptedException {
+  }
+
   @BeforeEach
   void beforeEach() {
-    Service.ignite();
+    service = Service.ignite();
   }
 
   @AfterEach
@@ -58,7 +61,7 @@ public class EndToEndTest {
     application.start();
     service.awaitInitialization();
 
-    HttpResponse<String> response = HttpClient.newHttpClient().send(
+    HttpResponse<String> createArticle = HttpClient.newHttpClient().send(
         HttpRequest.newBuilder()
             .POST(
                 BodyPublishers.ofString(
@@ -70,11 +73,43 @@ public class EndToEndTest {
                           """
                 )
             )
-            .uri(URI.create("http://localhost:4567/api/articles"))
+            .uri(URI.create("http://localhost:4567/api/articles".formatted(service.port())))
             .build(),
         HttpResponse.BodyHandlers.ofString(UTF_8)
     );
-    assertEquals(201, response.statusCode());
-  }
+    assertEquals(201, createArticle.statusCode());
 
+
+//    HttpResponse<String> createComment = HttpClient.newHttpClient().send(
+//        HttpRequest.newBuilder()
+//            .POST(
+//                BodyPublishers.ofString(
+//                    """
+//                            {
+//                              "articleId": {"id": 1,
+//                              "text": "This article about OOP in Java"
+//                            }
+//                          """
+//                )
+//            )
+//            .uri(URI.create("http://localhost:4567/api/comments".formatted(service.port())))
+//            .build(),
+//        HttpResponse.BodyHandlers.ofString(UTF_8)
+//    );
+//    assertEquals(201, createComment.statusCode());
+
+
+    HttpResponse<String> getArticle = HttpClient.newHttpClient().send(
+        HttpRequest.newBuilder()
+            .GET()
+            .uri(URI.create("http://localhost:4567/api/articles/:1"))
+            .build(),
+        HttpResponse.BodyHandlers.ofString(UTF_8)
+    );
+    assertEquals(201, getArticle.statusCode());
+
+
+
+
+  }
 }
