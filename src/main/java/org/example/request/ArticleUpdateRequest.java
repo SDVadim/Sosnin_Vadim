@@ -2,7 +2,9 @@ package org.example.request;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.example.comment.Comment;
 
+import java.util.List;
 import java.util.Set;
 
 public record ArticleUpdateRequest(String title, Set<String> tags) {
@@ -13,5 +15,6 @@ public record ArticleUpdateRequest(String title, Set<String> tags) {
   ) {
     this.title = title;
     this.tags = tags;
+
   }
 }

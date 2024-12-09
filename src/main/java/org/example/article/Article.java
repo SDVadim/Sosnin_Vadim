@@ -29,7 +29,7 @@ public class Article {
   }
 
   public Article withComment(List<Comment> newComment) {
-    return new Article(id, title, tags, comments);
+    return new Article(id, title, tags, newComment);
   }
   public long getId() {
     return id.getId();

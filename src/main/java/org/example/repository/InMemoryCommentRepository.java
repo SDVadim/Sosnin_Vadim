@@ -27,7 +27,7 @@ public class InMemoryCommentRepository implements CommentRepository {
 
   @Override
   public Comment findById(CommentId id) throws NoExistCommentExeption {
-    Comment comment = repo.get(id);
+    Comment comment = repo.get(id.getId());
     if (comment == null) {
       throw new NoExistCommentExeption("Cannot find comment with id: " + id);
     } else {

@@ -23,12 +23,12 @@ public class InMemoryArticleRepository implements ArticleRepository {
 
   @Override
   public List<Article> findAll() {
-    return new ArrayList<>(repo.values());
+    return repo.values().stream().toList();
   }
 
   @Override
   public Article findById(ArticleId id) throws NoExistArticleExeption {
-    Article article = repo.get(id);
+    Article article = repo.get(id.getId());
     if (article == null) {
       throw new NoExistArticleExeption("Cannot find article with id: " + id);
     } else {
@@ -48,7 +48,7 @@ public class InMemoryArticleRepository implements ArticleRepository {
   @Override
   public void update(Article article) throws NoExistArticleExeption {
     if (repo.get(article.getId()) == null) {
-      throw new NoExistArticleExeption("Cannot find article with id: " + article.getId());
+      throw new NoExistArticleExeption("1Cannot find article with id: " + article.getId());
     } else {
       repo.put(article.getId(), article);
     }

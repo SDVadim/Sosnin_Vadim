@@ -5,6 +5,7 @@ import org.example.article.Article;
 import org.example.article.ArticleId;
 import org.example.exeption.DuplicateArticleExeption;
 import org.example.exeption.NoExistArticleExeption;
+import org.example.exeption.NoExistCommentExeption;
 import org.example.request.ArticleCreateRequest;
 import org.example.request.ArticleUpdateRequest;
 import org.example.response.*;
@@ -47,7 +48,7 @@ public class ArticleController implements Controller {
             response.status(201);
             return objectMapper.writeValueAsString(new ArticleFindResponse(article.getTitle(), article.getTags(), article.getComments()));
           } catch (NoExistArticleExeption e) {
-            response.status(404);
+            response.status(400);
             LOG.warn("Cannot find Article with articleId: {}", articleId);
             return objectMapper.writeValueAsString(new ErrorResponse(e.getMessage()));
           }
@@ -105,7 +106,7 @@ public class ArticleController implements Controller {
             articleService.delete(articleId);
             response.status(201);
             return objectMapper.writeValueAsString(new ArticleDeleteResponse(articleId));
-          } catch (NoExistArticleExeption e) {
+          } catch (Exception  e) {
             LOG.warn("Cannot find Article with articleId: {} to delete", articleId);
             response.status(400);
             return objectMapper.writeValueAsString(new ArticleDeleteResponse(articleId));

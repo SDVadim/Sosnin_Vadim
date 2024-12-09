@@ -1,5 +1,6 @@
 package org.example.service;
 
+import org.example.article.Article;
 import org.example.article.ArticleId;
 import org.example.comment.Comment;
 import org.example.comment.CommentId;
@@ -9,6 +10,7 @@ import org.example.exeption.NoExistCommentExeption;
 import org.example.repository.ArticleRepository;
 import org.example.repository.CommentRepository;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class CommentService {
@@ -26,9 +28,12 @@ public class CommentService {
       CommentId commentId = commentRepository.generateId();
       Comment newComment = new Comment(commentId, articleId, text);
       commentRepository.create(newComment);
-      List<Comment> comments = articleRepository.findById(articleId).getComments();
+      Article article = articleRepository.findById(articleId);
+      List<Comment> comments = article.getComments();
+      if (comments == null) comments = new ArrayList<>();
       comments.add(newComment);
-      articleRepository.update(articleRepository.findById(articleId).withComment(comments));
+      article = article.withComment(comments);
+      articleRepository.update(article);
       return commentId;
     } catch (DuplicateCommentExeption | NoExistArticleExeption e) {
       throw e;
