@@ -83,7 +83,6 @@ public class ArticleController implements Controller {
           ArticleId articleId = new ArticleId(Long.parseLong(request.params("articleId")));
           ArticleUpdateRequest articleUpdateRequest = objectMapper.readValue(body, ArticleUpdateRequest.class);
           try {
-            Article article = articleService.findById(articleId);
             articleService.update(articleId, articleUpdateRequest.title(), articleUpdateRequest.tags());
             response.status(201);
             return objectMapper.writeValueAsString(new ArticleUpdateResponse(articleId));

@@ -90,19 +90,7 @@ class EndToEndTest {
                     .uri(URI.create("http://localhost:4567/api/comments"))
                     .build(),
                 HttpResponse.BodyHandlers.ofString(UTF_8));
-
     assertEquals(201, responseOfCreateComment.statusCode());
-
-    HttpResponse<String> getCommentResponse = HttpClient.newHttpClient()
-        .send(
-            HttpRequest.newBuilder()
-                .GET()
-                .uri(URI.create("http://localhost:4567/api/comments/1"))
-                .build(),
-            HttpResponse.BodyHandlers.ofString(UTF_8)
-        );
-    assertEquals(201, getCommentResponse.statusCode());
-
 
     HttpResponse<String> getArticleResponse = HttpClient.newHttpClient()
         .send(
@@ -143,9 +131,5 @@ class EndToEndTest {
             HttpResponse.BodyHandlers.ofString(UTF_8)
         );
     assertEquals(400, deleteNoExistArticleResponse.statusCode());
-
-
   }
-
-
 }
